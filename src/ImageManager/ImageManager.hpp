@@ -9,10 +9,29 @@
 #define IMAGEMANAGER_HPP_ 5
 
 #include <opencv2/opencv.hpp>
+#include <vector>
 #include "../ImageException/ImageException.hpp"
 
 class ImageManager {
     public:
+
+        /**
+         * @brief Print each Sample Image
+         * 
+         * @param waitTime the time to wait before skipping if no touches are pressed
+         * It is set to 0 by default
+         * If it is set to 0 the program will wait indefinitely untill a touch would be pressed
+         */
+
+        void printSampleImages(int waitTime = 0);
+
+        /**
+         * @brief Load an image and add it into our sample image vector
+         * 
+         * @param path the path to the vector image
+         */
+
+        void loadSampleImage(std::string path);
 
         /**
          * @brief Print our Original Image
@@ -101,6 +120,13 @@ class ImageManager {
          * 
          */
         cv::Mat _transformedImage;
+
+        /**
+         * @brief The vector containing sample images
+         * 
+         */
+
+        std::vector<cv::Mat> _sampleImage;
 };
 
 #endif /* !IMAGEMANAGER_HPP_ */

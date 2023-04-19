@@ -10,6 +10,10 @@ int main(int argc, char **argv)
 		ImageManager imageManager(700,700);
 		imageManager.loadImage(argv[1]);
 		imageManager.printOriginalImage();
+		for (int i = 2; i < argc; i++) {
+			imageManager.loadSampleImage(argv[i]);
+		}
+		imageManager.printSampleImages();
 
 	} catch (ImageException exception) {
 		std::cerr << exception.what() << std::endl;

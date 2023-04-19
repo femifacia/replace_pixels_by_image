@@ -7,6 +7,25 @@
 
 #include "ImageManager.hpp"
 
+void ImageManager::printSampleImages(int waitTime)
+{
+    std::string title = "";
+
+    for (int i = 0; i < _sampleImage.size(); i++) {
+        title = "image sample Number " + std::to_string(i);
+        cv::imshow(title, _sampleImage[i]);
+        cv::waitKey(waitTime);
+    }
+}
+
+void ImageManager::loadSampleImage(std::string path)
+{
+    cv::Mat image = cv::imread(path);
+
+    cv::resize(image, image, cv::Size(_sampleCols, _sampleRows), cv::INTER_LINEAR);
+    _sampleImage.push_back(image);
+}
+
 void ImageManager::printOriginalImage(std::string title, int waitTime)
 {
     cv::imshow(title, _originalImage);
