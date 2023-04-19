@@ -6,7 +6,7 @@
 */
 
 #ifndef IMAGEEXCEPTION_HPP_
-#define IMAGEEXCEPTION_HPP_
+#define IMAGEEXCEPTION_HPP_ 5
 
 #include <iostream>
 #include <exception>
