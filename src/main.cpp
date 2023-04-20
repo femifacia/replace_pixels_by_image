@@ -9,11 +9,13 @@ int main(int argc, char **argv)
 	try {
 		ImageManager imageManager(700,700);
 		imageManager.loadImage(argv[1]);
-		imageManager.printOriginalImage();
+//		imageManager.printOriginalImage();
 		for (int i = 2; i < argc; i++) {
 			imageManager.loadSampleImage(argv[i]);
 		}
-		imageManager.printSampleImages();
+//		imageManager.printSampleImages();
+		imageManager.replacePixelsByImages();
+//		imageManager.printTransformedImage();
 
 	} catch (ImageException exception) {
 		std::cerr << exception.what() << std::endl;
