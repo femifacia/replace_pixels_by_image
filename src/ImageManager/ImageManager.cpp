@@ -115,7 +115,7 @@ void ImageManager::printOriginalImage(std::string title, int waitTime)
 void ImageManager::loadImage(std::string path)
 {
     _originalImage = cv::imread(path);
-    cv::resize(_originalImage, _originalImage, cv::Size(160, 160), cv::INTER_LINEAR);
+    cv::resize(_originalImage, _originalImage, cv::Size(300, 300), cv::INTER_LINEAR);
     _imageCols = _originalImage.cols;
     _imageRows = _originalImage.rows;
 
