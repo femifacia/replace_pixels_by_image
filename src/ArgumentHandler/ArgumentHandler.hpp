@@ -40,6 +40,12 @@ class ArgumentHandler {
     private:
         std::unordered_map<std::string, void (ArgumentHandler::*)(char **, int &)> _functionMap;
 
+        std::string _green;
+        std::string _blue;
+        std::string _red;
+        std::string _yellow;
+        std::string _white;
+
 };
 
 #endif /* !ARGUMENTHANDLER_HPP_ */
