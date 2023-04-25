@@ -30,6 +30,19 @@ void ArgumentHandler::changeOutput(char **argv, int &index)
         throw ImageException("Bad flag manipulation");
     }
     if (arg[0] == '-' && !isFullNameEnabled) {
+        std::cout << "If you want to use a path which start by " << _yellow <<"-" << _white;
+        std::cout <<" you have to put before this path " << _yellow <<"--" << _white << " flag"<<std::endl;
+
+        std::cout << "Your command would have been" << std::endl;
+        std::cout << "\t";
+        for (int i = 0; argv[i]; i++) {
+            if (i == index)
+                std::cout << _green << "-- "<< _white;
+            std::cout << argv[i];
+            if (argv[i + 1])
+                std::cout << " ";
+        }
+        std::cout << std::endl << std::endl;
         throw ImageException(std::string("unknown argument \033[01;91m") + arg + std::string("\033[00m"));
     }
     _output = arg;
@@ -44,13 +57,22 @@ void ArgumentHandler::printHelp(char **argv, int &index)
     std::cout << "Usage" << std::endl;
     std::cout << "\treplace_pixel_by_image -i path_to_image -s sample_images... [options]..." << std::endl << std::endl;
     std::cout << "Arguments and Options" << std::endl << std::endl;
-    std::cout << _green <<"-i "<< _red <<"[required]" << _white<< "\t:\tafter this flag, specify the path to the image you want to replace its pixels by images" << std::endl << std::endl;
+    std::cout << _green <<"-i "<< _red <<"[required]" << _white<< "\t:\tafter this flag, specify the path to the image you want to replace its pixels by images. ";
+    std::cout << "If you want to use a path which start by " << _yellow <<"-" << _white;
+    std::cout <<" you have to put before this path " << _yellow <<"--" << _white << " flag"<<std::endl;
+    std::cout << std::endl << std::endl;
     std::cout << _green <<"-s "<< _red <<"[required]" << _white<< "\t:\tafter this flag, specify the path to the images you want to replace the pixels of the main image with.";
-    std::cout << " You can use as many images you want. They will randomly be used to constitute your new image"<< std::endl << std::endl;
+    std::cout << " You can use as many images you want. They will randomly be used to constitute your new image. ";
+    std::cout << "If you want to use a path which start by " << _yellow <<"-" << _white;
+    std::cout <<" you have to put before this path " << _yellow <<"--" << _white << " flag"<<std::endl;
+    std::cout<< std::endl << std::endl;
     std::cout << "Examples" << std::endl << std::endl;
     std::cout << "\treplace_pixel_by_image -i joconde.jpg -r chicken.jpg ../images/flower.png ./car.png" << std::endl;
     std::cout << "\treplace_pixel_by_image -r fox.png -i dog.png" << std::endl << std::endl;
-    std::cout << _green <<"-o "<< _yellow <<"[optional]" << _white<< "\t:\tafter this flag, specify the name of the output image" << std::endl << std::endl;
+    std::cout << _green <<"-o "<< _yellow <<"[optional]" << _white<< "\t:\tafter this flag, specify the name of the output image. ";
+    std::cout << "If you want to use a path which start by " << _yellow <<"-" << _white;
+    std::cout <<" you have to put before this path " << _yellow <<"--" << _white << " flag"<<std::endl;
+    std::cout << std::endl << std::endl;
     std::cout << "" << std::endl;
     std::cout << "" << std::endl;
     std::cout << "" << std::endl;
