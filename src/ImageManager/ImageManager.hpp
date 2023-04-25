@@ -83,9 +83,11 @@ class ImageManager {
         /**
          * @brief Print our Original Image
          *
-         * @param title the title of our screen
+         * @param title
+         * the title of our screen
          *  
-         * @param waitTime the time to wait before skipping if no touches are pressed
+         * @param waitTime
+         * the time to wait before skipping if no touches are pressed
          * It is set to 0 by default
          * If it is set to 0 the program will wait indefinitely untill a touch would be pressed
          */

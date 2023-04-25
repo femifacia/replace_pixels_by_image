@@ -7,6 +7,35 @@
 
 #include "ArgumentHandler.hpp"
 
+void ArgumentHandler::printParameterSummary()
+{
+
+    std::cout << "Output path:\t" << _blue << _output << _white <<std::endl;
+}
+
+void ArgumentHandler::changeOutput(char **argv, int &index)
+{
+    bool isFullNameEnabled = false;
+    index += 1;
+    if (argv[index] && std::string(argv[index]) == "--") {
+        index += 1;
+//        std::cout <<"jjjj";
+        isFullNameEnabled = true;
+    }
+    std::string arg = (argv[index]) ? argv[index] : "";
+//    arg = argv[index];
+    if (argv[index] == NULL || (_functionMap.count(arg) && !isFullNameEnabled)) {
+        std::cout << "After typing " << _cyan << "-o" << _white <<" or " << _cyan;
+        std::cout <<"--output" << _white << " you have to put the path to the new output" << std::endl << std::endl;
+        throw ImageException("Bad flag manipulation");
+    }
+    if (arg[0] == '-' && !isFullNameEnabled) {
+        throw ImageException(std::string("unknown argument \033[01;91m") + arg + std::string("\033[00m"));
+    }
+    _output = arg;
+    index+=1;
+}
+
 void ArgumentHandler::printHelp(char **argv, int &index)
 {
     std::cout << "------This is the help section------" << std::endl << std::endl;
@@ -25,6 +54,7 @@ void ArgumentHandler::printHelp(char **argv, int &index)
     std::cout << "" << std::endl;
     std::cout << "" << std::endl;
     std::cout << "" << std::endl;
+    exit(0);
     while (argv[index])
        index++;
 }
@@ -50,9 +80,16 @@ ArgumentHandler::ArgumentHandler()
     _green = "\033[01;92m";
     _red = "\033[01;91m";
     _yellow = "\033[01;93m";
-    _blue = "\033[01;91m";
+    _blue = "\033[01;94m";
+    _cyan = "\033[01;96m";
+
+    _pathToImage = "";
+    _output = "./transformed.png";
+
     _functionMap["-h"] = &ArgumentHandler::printHelp;
     _functionMap["--help"] = &ArgumentHandler::printHelp;
+    _functionMap["-o"] = &ArgumentHandler::changeOutput;
+    _functionMap["--output"] = &ArgumentHandler::changeOutput;
 }
 
 ArgumentHandler::~ArgumentHandler()

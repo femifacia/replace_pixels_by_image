@@ -10,6 +10,7 @@ int main(int argc, char **argv)
 	try {
 		ArgumentHandler argHandler;
 		argHandler.manageArguments(argv, 1);
+		argHandler.printParameterSummary();
 //		ImageManager imageManager(700,700);
 //		imageManager.loadImage(argv[1]);
 // not		imageManager.printOriginalImage();

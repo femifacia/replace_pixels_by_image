@@ -11,9 +11,27 @@
 #include "../ImageManager/ImageManager.hpp"
 #include "../ImageException/ImageException.hpp"
 #include <unordered_map>
+#include <vector>
 
 class ArgumentHandler {
     public:
+
+        /**
+         * @brief Print Parameter Summary
+         * 
+         * 
+         */
+
+        void printParameterSummary(void);
+
+        /**
+         * @brief change the output
+         * 
+         * @param argv arguments
+         * @param index of argument
+         */
+
+        void changeOutput(char **argv, int &index);
 
         /**
          * @brief Manage arguments and option recieved by the program 
@@ -38,13 +56,51 @@ class ArgumentHandler {
 
     protected:
     private:
+
+        std::string _pathToImage;
+
+        std::vector<std::string> _sampleImages;
+
+        std::string _output;
+
+        /**
+         * @brief a Map which associate to a string a pointer on a function of this class
+         * 
+         */
         std::unordered_map<std::string, void (ArgumentHandler::*)(char **, int &)> _functionMap;
 
+        /**
+         * @brief green Color Code
+         * 
+         */
         std::string _green;
+        /**
+         * @brief blue color code
+         * 
+         */
         std::string _blue;
+        /**
+         * @brief red color code
+         * 
+         */
         std::string _red;
+        /**
+         * @brief yellow color code
+         * 
+         */
         std::string _yellow;
+        /**
+         * @brief white color code
+         * 
+         */
         std::string _white;
+
+        /**
+         * @brief cyan color code
+         * 
+         */
+
+        std::string _cyan;
 
 };
 
