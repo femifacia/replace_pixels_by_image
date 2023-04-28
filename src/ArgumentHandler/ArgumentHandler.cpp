@@ -7,10 +7,99 @@
 
 #include "ArgumentHandler.hpp"
 
+
+void ArgumentHandler::setSamplesImages(char **argv, int &index)
+{
+    bool isFullNameEnabled = false;
+    index += 1;
+    if (argv[index] && std::string(argv[index]) == "--") {
+        index += 1;
+//        std::cout <<"jjjj";
+        isFullNameEnabled = true;
+    }
+    std::string arg = (argv[index]) ? argv[index] : "";
+//    arg = argv[index];
+    if (argv[index] == NULL || (_functionMap.count(arg) && !isFullNameEnabled)) {
+        std::cout << "After typing " << _cyan << "-s" << _white <<" or " << _cyan;
+        std::cout <<"--sample" << _white << " you have to put the path to the new output" << std::endl << std::endl;
+        throw ImageException("Bad flag manipulation");
+    }
+    while (argv[index] && !(_functionMap.count(arg) && !isFullNameEnabled)) {
+        arg = (argv[index]) ? argv[index] : "";
+        if (argv[index] == std::string("--")) {
+            index += 1;
+            isFullNameEnabled = true;
+            continue;
+        }
+        if (arg[0] == '-' && !isFullNameEnabled) {
+            std::cout << "If you want to use a path which start by " << _yellow <<"-" << _white;
+            std::cout <<" you have to put before this path " << _yellow <<"--" << _white << " flag"<<std::endl;
+
+            std::cout << "Your command would have been" << std::endl;
+            std::cout << "\t";
+            for (int i = 0; argv[i]; i++) {
+                if (i == index)
+                    std::cout << _green << "-- "<< _white;
+                std::cout << argv[i];
+                if (argv[i + 1])
+                    std::cout << " ";
+            }
+            std::cout << std::endl << std::endl;
+            throw ImageException(std::string("unknown argument \033[01;91m") + arg + std::string("\033[00m"));
+            }
+        _sampleImages.push_back(arg);
+        index+=1;
+        isFullNameEnabled = false;
+    }
+}
+
+void ArgumentHandler::setImagePath(char **argv, int &index)
+{
+    bool isFullNameEnabled = false;
+    index += 1;
+    if (argv[index] && std::string(argv[index]) == "--") {
+        index += 1;
+//        std::cout <<"jjjj";
+        isFullNameEnabled = true;
+    }
+    std::string arg = (argv[index]) ? argv[index] : "";
+//    arg = argv[index];
+    if (argv[index] == NULL || (_functionMap.count(arg) && !isFullNameEnabled)) {
+        std::cout << "After typing " << _cyan << "-i" << _white <<" or " << _cyan;
+        std::cout <<"--image" << _white << " you have to put the path to the new output" << std::endl << std::endl;
+        throw ImageException("Bad flag manipulation");
+    }
+    if (arg[0] == '-' && !isFullNameEnabled) {
+        std::cout << "If you want to use a path which start by " << _yellow <<"-" << _white;
+        std::cout <<" you have to put before this path " << _yellow <<"--" << _white << " flag"<<std::endl;
+
+        std::cout << "Your command would have been" << std::endl;
+        std::cout << "\t";
+        for (int i = 0; argv[i]; i++) {
+            if (i == index)
+                std::cout << _green << "-- "<< _white;
+            std::cout << argv[i];
+            if (argv[i + 1])
+                std::cout << " ";
+        }
+        std::cout << std::endl << std::endl;
+        throw ImageException(std::string("unknown argument \033[01;91m") + arg + std::string("\033[00m"));
+    }
+    _pathToImage = arg;
+    index+=1;
+}
+
 void ArgumentHandler::printParameterSummary()
 {
-
-    std::cout << "Output path:\t" << _blue << _output << _white <<std::endl;
+    int size = _sampleImages.size();
+    std::cout << "The Image:\t" << _blue << _pathToImage << _white <<std::endl;
+    std::cout << "Sample Images:" << std::endl;
+    for (int i = 0; i < size; i++) {
+        std::cout  << "\t-> " << _blue <<_sampleImages[i] << _white << std::endl;
+    }
+    if (!size)
+        std::cout  << std::endl;
+    std::cout << "Path of the new Image:\t" << _blue << _output << _white <<std::endl;
 }
 
 void ArgumentHandler::changeOutput(char **argv, int &index)
@@ -69,7 +158,7 @@ void ArgumentHandler::printHelp(char **argv, int &index)
     std::cout << "Examples" << std::endl << std::endl;
     std::cout << "\treplace_pixel_by_image -i joconde.jpg -r chicken.jpg ../images/flower.png ./car.png" << std::endl;
     std::cout << "\treplace_pixel_by_image -r fox.png -i dog.png" << std::endl << std::endl;
-    std::cout << _green <<"-o "<< _yellow <<"[optional]" << _white<< "\t:\tafter this flag, specify the name of the output image. ";
+    std::cout << _green <<"-o "<< _white << "or "<< _green<< "--output " <<_yellow <<"[optional]" << _white<< "\t:\tafter this flag, specify the name of the output image. ";
     std::cout << "If you want to use a path which start by " << _yellow <<"-" << _white;
     std::cout <<" you have to put before this path " << _yellow <<"--" << _white << " flag"<<std::endl;
     std::cout << std::endl << std::endl;
@@ -112,6 +201,9 @@ ArgumentHandler::ArgumentHandler()
     _functionMap["--help"] = &ArgumentHandler::printHelp;
     _functionMap["-o"] = &ArgumentHandler::changeOutput;
     _functionMap["--output"] = &ArgumentHandler::changeOutput;
+    _functionMap["-i"] = &ArgumentHandler::setImagePath;
+    _functionMap["--image"] = &ArgumentHandler::setImagePath;
+    _functionMap["-s"] = &ArgumentHandler::setSamplesImages;
 }
 
 ArgumentHandler::~ArgumentHandler()

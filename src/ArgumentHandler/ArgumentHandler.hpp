@@ -16,6 +16,7 @@
 class ArgumentHandler {
     public:
 
+
         /**
          * @brief Print Parameter Summary
          * 
@@ -24,14 +25,7 @@ class ArgumentHandler {
 
         void printParameterSummary(void);
 
-        /**
-         * @brief change the output
-         * 
-         * @param argv arguments
-         * @param index of argument
-         */
 
-        void changeOutput(char **argv, int &index);
 
         /**
          * @brief Manage arguments and option recieved by the program 
@@ -56,6 +50,26 @@ class ArgumentHandler {
 
     protected:
     private:
+
+        void setSamplesImages(char **argv, int &index);
+
+        /**
+         * @brief change the output
+         * 
+         * @param argv arguments
+         * @param index of argument
+         */
+
+        void changeOutput(char **argv, int &index);
+
+        /**
+         * @brief load the main image
+         * 
+         * @param argv the arguments
+         * @param index the index of arguments
+         */
+
+        void setImagePath(char **argv, int & index);
 
         std::string _pathToImage;
 
