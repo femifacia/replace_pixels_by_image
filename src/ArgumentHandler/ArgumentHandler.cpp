@@ -18,6 +18,32 @@ bool ArgumentHandler::isNumber(std::string arg)
     return true;
 }
 
+void ArgumentHandler::setImageSize(char **argv, int &index)
+{
+    if (!argv[index + 1] || !argv[index + 2]) {
+        std::cout << "After typing " << _cyan << "--sisze-image" << _white;
+        std::cout << " you have to put the "<< _red << "height"<< _white<< " and the "<< _red<< "width";
+        std::cout << _white << " of the image" << std::endl << std::endl;
+        throw ImageException("Bad flag manipulation");
+    }
+    std::string arg1(argv[index + 1]);
+    std::string arg2(argv[index + 2]);
+    
+    if (!isNumber(arg1)) {
+        std::cout << _red << arg1 << _white << " is not a number" << std::endl;
+        throw ImageException("Bad flag argument"); 
+    }
+
+    if (!isNumber(arg2)) {
+        std::cout << _red << arg2 << _white << "is not a number" << std::endl;
+        throw ImageException("Bad flag argument"); 
+    }
+    _imageHeight = atoi(arg1.c_str());
+    _imageWidth = atoi(arg2.c_str());
+    index += 3;
+}
+
+
 void ArgumentHandler::setSampleSize(char **argv, int &index)
 {
     if (!argv[index + 1] || !argv[index + 2]) {
@@ -259,6 +285,7 @@ ArgumentHandler::ArgumentHandler()
     _functionMap["-s"] = &ArgumentHandler::setSamplesImages;
     _functionMap["--sample"] = &ArgumentHandler::setSamplesImages;
     _functionMap["--size-sample"] = &ArgumentHandler::setSampleSize;
+    _functionMap["--size-image"] = &ArgumentHandler::setImageSize;
 }
 
 ArgumentHandler::~ArgumentHandler()
