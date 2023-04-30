@@ -12,6 +12,7 @@
 #include "../ImageException/ImageException.hpp"
 #include <unordered_map>
 #include <vector>
+#include <string.h>
 
 class ArgumentHandler {
     public:
@@ -50,6 +51,41 @@ class ArgumentHandler {
 
     protected:
     private:
+
+        /**
+         * @brief return true if the arg is a number, otherwise false
+         * 
+         * @param arg 
+         * @return true 
+         * @return false 
+         */
+        bool isNumber(std::string arg);
+
+        /**
+         * @brief change the output
+         * 
+         * @param argv arguments
+         * @param index of argument
+         */
+
+        void setSampleSize(char **argv, int &index);
+
+
+        /**
+         * @brief change the output
+         * 
+         * @param argv arguments
+         * @param index of argument
+         */
+
+        void setImageSize(char **argv, int &index);
+
+        /**
+         * @brief change the output
+         * 
+         * @param argv arguments
+         * @param index of argument
+         */
 
         void setSamplesImages(char **argv, int &index);
 
@@ -115,6 +151,11 @@ class ArgumentHandler {
          */
 
         std::string _cyan;
+
+        int _imageWidth;
+        int _imageHeight;
+        int _sampleWidth;
+        int _sampleHeight;
 
 };
 
