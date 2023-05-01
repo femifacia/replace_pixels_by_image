@@ -112,7 +112,7 @@ class ImageManager {
          * @param sampleCols Number of Columns for sample images
          */
 
-        ImageManager(int maxImageRows, int maxImageCols, int sampleRows = 50, int sampleCols = 50);
+        ImageManager(int imageRows, int imageCols, int sampleRows = 50, int sampleCols = 50, int maxImageRows = 1024, int maxImageCols = 1024);
 
         /**
          * @brief Destroy the Image Manager object

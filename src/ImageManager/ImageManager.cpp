@@ -42,9 +42,10 @@ void ImageManager::fillTransformedImage(double lightFactor)
     std::cout << _imageCols << std::endl;
 
     _transformedImage = cv::imread("./transformed.jpg");
+    double max_rows = (((double)((_sampleRows * _imageRows))));
     for (int i = 0; i < _imageRows; i++) {
         nI = i * _sampleRows;
-        std::cout <<"pi " << nI <<std::endl;
+        std::cout <<"finished at " << ((double)(nI / max_rows)) * 100<< "%" <<std::endl;
         for (int j = 0; j < _imageCols; j++) {
             pixel = _originalImage.at<cv::Vec3b>(i,j);
             sample = getSampleImage();
@@ -75,15 +76,17 @@ void ImageManager::fillTransformedImage(double lightFactor)
                     _transformedImage.at<cv::Vec3b>(i, j)[2] = 0;
         }
     }*/
-    std::cout << "finished" << std::endl;
+    std::cout << "finished at 100%" << std::endl;
 }
 
 void ImageManager::replacePixelsByImages(std::string path, double lightFactor)
 {
+    std::cout << "Let's start the creation of our new image" << std::endl;
     createTransformedImage();
     cv::imwrite(path, _transformedImage);
     fillTransformedImage(lightFactor);
     cv::imwrite(path, _transformedImage);
+    std::cout << "It is over" << std::endl;
 }
 
 void ImageManager::printSampleImages(int waitTime)
@@ -102,7 +105,7 @@ void ImageManager::loadSampleImage(std::string path)
     cv::Mat image = cv::imread(path);
 
     cv::resize(image, image, cv::Size(_sampleCols, _sampleRows), cv::INTER_LINEAR);
-    std::cout << "okkkk" << image.rows << " "<< image.cols << std::endl;
+//    std::cout << "okkkk" << image.rows << " "<< image.cols << std::endl;
     _sampleImage.push_back(image);
 }
 
@@ -115,7 +118,7 @@ void ImageManager::printOriginalImage(std::string title, int waitTime)
 void ImageManager::loadImage(std::string path)
 {
     _originalImage = cv::imread(path);
-    cv::resize(_originalImage, _originalImage, cv::Size(300, 300), cv::INTER_LINEAR);
+    cv::resize(_originalImage, _originalImage, cv::Size(_imageCols, _imageCols), cv::INTER_LINEAR);
     _imageCols = _originalImage.cols;
     _imageRows = _originalImage.rows;
 
@@ -124,7 +127,7 @@ void ImageManager::loadImage(std::string path)
 
 }
 
-ImageManager::ImageManager(int maxImageRows, int maxImageCols, int sampleRows, int sampleCols) : _maxImageRows(maxImageRows),_maxImageCols(maxImageCols),_sampleRows(sampleRows), _sampleCols(sampleCols)
+ImageManager::ImageManager(int imageRows, int imageCols, int sampleRows, int sampleCols,int maxImageRows, int maxImageCols) : _maxImageRows(maxImageRows),_maxImageCols(maxImageCols),_sampleRows(sampleRows), _sampleCols(sampleCols), _imageCols(imageCols), _imageRows(imageRows)
 {
 }
 

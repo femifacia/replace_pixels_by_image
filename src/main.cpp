@@ -11,6 +11,7 @@ int main(int argc, char **argv)
 		ArgumentHandler argHandler;
 		argHandler.manageArguments(argv, 1);
 		argHandler.printParameterSummary();
+		ImageManager * imageManager = argHandler.createImageManager();
 //		ImageManager imageManager(700,700);
 //		imageManager.loadImage(argv[1]);
 // not		imageManager.printOriginalImage();
@@ -18,7 +19,7 @@ int main(int argc, char **argv)
 //			imageManager.loadSampleImage(argv[i]);
 //		}
 // not		imageManager.printSampleImages();
-//		imageManager.replacePixelsByImages();
+		imageManager->replacePixelsByImages();
 //	not	imageManager.printTransformedImage();
 		return 0;
 	} catch (ImageException exception) {

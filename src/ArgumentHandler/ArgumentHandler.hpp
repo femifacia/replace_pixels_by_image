@@ -10,12 +10,21 @@
 
 #include "../ImageManager/ImageManager.hpp"
 #include "../ImageException/ImageException.hpp"
+#include <memory>
 #include <unordered_map>
 #include <vector>
 #include <string.h>
 
 class ArgumentHandler {
     public:
+
+        /**
+         * @brief Create a Image Manager object
+         * 
+         * @return ImageManager* 
+         */
+
+        ImageManager *createImageManager(void);
 
 
         /**

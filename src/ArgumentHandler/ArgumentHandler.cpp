@@ -7,6 +7,16 @@
 
 #include "ArgumentHandler.hpp"
 
+ImageManager * ArgumentHandler::createImageManager(void)
+{
+    static std::shared_ptr<ImageManager> imageManager(new ImageManager(_imageHeight, _imageWidth, _sampleHeight, _sampleWidth));
+
+    imageManager->loadImage(_pathToImage);
+    for (int i = 0; i < _sampleImages.size(); ++i)
+        imageManager->loadSampleImage(_sampleImages[i]);
+    return imageManager.get();
+}
+
 bool ArgumentHandler::isNumber(std::string arg)
 {
     if (arg.empty())
@@ -153,20 +163,38 @@ void ArgumentHandler::setImagePath(char **argv, int &index)
 void ArgumentHandler::printParameterSummary()
 {
     int size = _sampleImages.size();
-    std::cout << "The Image:\t" << _blue << _pathToImage << _white <<std::endl;
+    std::cout << "The Image:"<<std::endl<<"\t-> " << _blue << _pathToImage << _white <<std::endl;
     std::cout << "Sample Images:" << std::endl;
     for (int i = 0; i < size; i++) {
         std::cout  << "\t-> " << _blue <<_sampleImages[i] << _white << std::endl;
     }
     if (!size)
-        std::cout  << std::endl;
-    std::cout << "Path of the new Image:\t" << _blue << _output << _white <<std::endl;
+        std::cout  << "\t-> " << std::endl;
+    std::cout << "Path of the new Image:"<<std::endl<<"\t-> " << _blue << _output << _white <<std::endl;
     std::cout << "Image size:" << std::endl;
     std::cout  << "\t-> " << "Height: " << _blue <<_imageHeight << _white << std::endl;
     std::cout  << "\t-> " << "Width: " << _blue <<_imageWidth << _white << std::endl;
     std::cout << "Sample size:" << std::endl;
     std::cout  << "\t-> " << "Height: " << _blue <<_sampleHeight << _white << std::endl;
     std::cout  << "\t-> " << "Width: " << _blue <<_sampleWidth << _white << std::endl;
+
+    if (_pathToImage == "") {
+        std::cout << "You have to specify the path of the main image by using ";
+        std::cout << _red << "-i" << _white << " or " << _red <<"--image";
+        std::cout << _white << " flag." << std::endl;
+        std::cout << "You can refer to help by typing " <<_red << "-h" << _white << " or " << _red <<"--help";
+        std::cout << _white << " flag" << std::endl << std::endl;
+        throw ImageException("required flag missing");
+    }
+
+    if (!size) {
+        std::cout << "You have to specify the path of at least one sample image by using ";
+        std::cout << _red << "-s" << _white << " or " << _red <<"--sample";
+        std::cout << _white << " flag." << std::endl;
+        std::cout << "You can refer to help by typing " <<_red << "-h" << _white << " or " << _red <<"--help";
+        std::cout << _white << " flag" << std::endl << std::endl;
+        throw ImageException("required flag missing");
+    }
 }
 
 void ArgumentHandler::changeOutput(char **argv, int &index)
