@@ -252,19 +252,32 @@ void ArgumentHandler::printHelp(char **argv, int &index)
     std::cout<< std::endl << std::endl;
     std::cout << "Examples" << std::endl << std::endl;
     std::cout << "\treplace_pixel_by_image -i joconde.jpg -r chicken.jpg ../images/flower.png ./car.png" << std::endl;
-    std::cout << "\treplace_pixel_by_image -s fox.png -i dog.png" << std::endl << std::endl;
-    std::cout << "\treplace_pixel_by_image --sample cat.png -i dog.png" << std::endl << std::endl;
+    std::cout << "\treplace_pixel_by_image -s fox.png -i dog.png" << std::endl;
+    std::cout << "\treplace_pixel_by_image --sample cat.png -i dog.png" << std::endl;
+    std::cout << "\treplace_pixel_by_image --sample cat.png --sample -- -my_cat.png -i dog.png (We put -- before an argument which start by -)" << std::endl;
+    std::cout << "\treplace_pixel_by_image --sample pong.png -i -- -ball.png (We put -- before an argument which start by -)" << std::endl;
     std::cout << "\treplace_pixel_by_image --image rainbow.png --sample dog.png -s cat.png" << std::endl << std::endl;
     std::cout << _green <<"-o "<< _white << "or "<< _green<< "--output "<< _white << "path " <<_yellow <<"[optional]" << _white<< "\t:\tafter this flag, specify the name of the output image. ";
     std::cout << "If you want to use a path which start by " << _yellow <<"-" << _white;
     std::cout <<" you have to put before this path " << _yellow <<"--" << _white << " flag"<<std::endl;
     std::cout << std::endl << std::endl;
-    std::cout << _green <<"--size-sample " << _white << "height width "<<_yellow <<"[optional]" << _white<< "\t:\tafter this flag, the height and the width we will use to";
-    std::cout << " crop sample images" << std::endl;
+    std::cout << "Examples" << std::endl << std::endl;
+    std::cout << "\treplace_pixel_by_image -o ./my_animal.png -i joconde.jpg -r chicken.jpg ../images/flower.png ./car.png" << std::endl;
+    std::cout << "\treplace_pixel_by_image --output ../image/predators.jpeg -s fox.png -i dog.png" << std::endl;
+    std::cout << "\treplace_pixel_by_image --sample cat.png -i dog.png -o -- -cute-animal.jpg (We put -- before an argument which start by -)" << std::endl;
+    std::cout << "\treplace_pixel_by_image --image rainbow.png --sample dog.png -s cat.png -o ./beatiful.png" << std::endl << std::endl;
+
+    std::cout << _green <<"--size-sample " << _white << "height width "<<_yellow <<"[optional]" << _white<< "\t:\tafter this flag, change the height and the width we will use to";
+    std::cout << " crop sample images. By default it is set to 100 100" << std::endl;
     std::cout << std::endl << std::endl;
-    std::cout << _green <<"--size-image " << _white << "height width "<<_yellow <<"[optional]" << _white<< "\t:\tafter this flag, the height and the width we will use to";
-    std::cout << " crop the main image" << std::endl;
-    std::cout << "" << std::endl;
+    std::cout << _green <<"--size-image " << _white << "height width "<<_yellow <<"[optional]" << _white<< "\t:\tafter this flag, change the height and the width we will use to";
+    std::cout << " crop the main image. By default it is set to 150 150" << std::endl;
+
+    std::cout << "Examples" << std::endl << std::endl;
+    std::cout << "\treplace_pixel_by_image  --size-image 40 50 -o ./my_animal.png -i joconde.jpg -r chicken.jpg ../images/flower.png ./car.png" << std::endl;
+    std::cout << "\treplace_pixel_by_image --size-sample 90 90 -o ../image/predators.jpeg --size-image 200 200 -s fox.png -i dog.png" << std::endl;
+    std::cout << "\treplace_pixel_by_image --sample cat.png -i dog.png --size-sample 40 40 -o -- -cute-animal.jpg (We put -- before an argument which start by -)" << std::endl;
+    std::cout << "\treplace_pixel_by_image -i rainbow.png --size-image 30 30 -s dog.png -s cat.png -o ./beatiful.png" << std::endl << std::endl;
     std::cout << "" << std::endl;
     exit(0);
     while (argv[index])
